@@ -5,6 +5,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import static labyrinthe.ESalle.ESCALIER_DESCENDANT;
 import labyrinthe.ILabyrinthe;
 import labyrinthe.ISalle;
 import vue2D.AVue;
@@ -64,16 +65,44 @@ public class Dessin extends Canvas {
 
     public void dessinSalles(IEtage etage) {
         for (ISalle s : etage) {
-            Color c = Color.rgb(200, 200, 200);
-            dessinSalle(s, c);
+            //Color c = Color.rgb(200, 200, 200);
+            dessinSalle(s);
         }
     }
 
-    public void dessinSalle(ISalle s, Color c) {
+    public void dessinSalle(ISalle s) {
         int posX = unite * s.getX();
         int posY = unite * s.getY();
-        tampon.setFill(c);
-        tampon.fillRect(posX, posY, unite, unite);
+        
+        Image img = null;
+        Color c = null;
+        switch (s.getType()) {
+            case ESCALIER_DESCENDANT:
+                img = escalierD;
+                break;
+            case ESCALIER_MONTANT:
+                img = escalierM;
+                break;
+            case NORMALE:
+                c = Color.rgb(200, 200, 200);
+                break;
+            case ENTREE:
+                c = Color.rgb(200, 20, 30);
+                break;
+            case SORTIE:
+                c = Color.GREEN;
+                break;
+        }
+        
+        if (img != null)
+        {
+            tampon.drawImage(img, posX, posY, unite, unite);
+        }
+        else if (c != null)
+        {
+            tampon.setFill(c);
+            tampon.fillRect(posX, posY, unite, unite);
+        }
     }
 
     public void dessinPlusCourtChemin(ISprite p) {

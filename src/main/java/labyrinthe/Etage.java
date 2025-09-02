@@ -38,7 +38,7 @@ public class Etage extends ArrayList<ISalle> implements IEtage {
         hauteur = Integer.parseInt(mots[1]);
         lignes.remove(0);
         // salles
-        for (String ligne : lignes){
+        for (String ligne : lignes) {
             mots = ligne.split(" ");
             Vector2 pos = new Vector2();
             pos.x = Integer.parseInt(mots[0]);
@@ -47,7 +47,10 @@ public class Etage extends ArrayList<ISalle> implements IEtage {
             ESalle salleType = getTypeFromChar(mots[2].charAt(0));
             
             Salle newFloor = new Salle(pos, salleType, this);
-            add(newFloor);
+            if (!add(newFloor))
+            {
+                System.out.println("Salle is not correct");
+            }
         }
     }
     
@@ -84,5 +87,20 @@ public class Etage extends ArrayList<ISalle> implements IEtage {
         return num;
     }
     
-
+    @Override
+    public boolean add(ISalle salle)
+    {
+        int x = salle.getX();
+        int y = salle.getY();
+        
+        for (ISalle s : this)
+        {
+            if ((s.getX() == x && s.getY() == y) || (s.getX() < 0 || s.getY() < 0 || s.getX() >= largeur || s.getY() >= hauteur))
+            {
+                return false;
+            }
+        }
+        super.add(salle);
+        return true;
+    }
 }

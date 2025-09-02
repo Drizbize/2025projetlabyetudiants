@@ -51,9 +51,14 @@ public class Salle implements ISalle {
 
     @Override
     public boolean estAdjacente(ISalle autre) {
+        int x = Math.abs(m_position.x - autre.getX());
+        int y = Math.abs(m_position.y - autre.getY());
+        
+        boolean canGo = (x == 0 && y == 1) || (x == 1 && y == 0);
+        
         return (m_type == ESalle.ESCALIER_MONTANT && autre.getType() == ESalle.ESCALIER_DESCENDANT &&
                 m_floor.getNum() < autre.getEtage().getNum() &&
-                m_position.x == autre.getX() && m_position.y == autre.getY());
+                m_position.x == autre.getX() && m_position.y == autre.getY()) && canGo;
     }
 
     @Override
