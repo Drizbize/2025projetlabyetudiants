@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.util.Collection;
 import labyrinthe.ILabyrinthe;
 import labyrinthe.ISalle;
@@ -14,7 +15,7 @@ public class Core {
     ISprite heros;
     ILabyrinthe labyrinthe;
 
-    protected void initLabyrinthe() {
+    protected void initLabyrinthe() throws IOException {
         // creation du labyrinthe
         labyrinthe = new labyrinthe.Labyrinthe();
     }

@@ -44,7 +44,7 @@ public class Etage extends ArrayList<ISalle> implements IEtage {
             pos.x = Integer.parseInt(mots[0]);
             pos.y = Integer.parseInt(mots[1]);
             
-            ESalle salleType = getTypeFromChar(mots[3].charAt(0));
+            ESalle salleType = getTypeFromChar(mots[2].charAt(0));
             
             Salle newFloor = new Salle(pos, salleType, this);
             add(newFloor);

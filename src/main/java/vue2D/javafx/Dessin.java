@@ -70,7 +70,10 @@ public class Dessin extends Canvas {
     }
 
     public void dessinSalle(ISalle s, Color c) {
-        // ...
+        int posX = unite * s.getX();
+        int posY = unite * s.getY();
+        tampon.setFill(c);
+        tampon.fillRect(posX, posY, unite, unite);
     }
 
     public void dessinPlusCourtChemin(ISprite p) {

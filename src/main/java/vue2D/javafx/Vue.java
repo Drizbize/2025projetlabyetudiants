@@ -2,7 +2,9 @@ package vue2D.javafx;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import labyrinthe.IEtage;
 import labyrinthe.ILabyrinthe;
+import labyrinthe.ISalle;
 import vue2D.IVue;
 import vue2D.AVue;
 
@@ -29,7 +31,9 @@ public class Vue extends AVue implements IVue {
         // recopie du fond (image); murs + salles
         dessin.dessinFond();
         // dessin des salles
-        // ...
+        
+        IEtage e = labyrinthe.getEtageCourant();
+        dessin.dessinSalles(e);
     }
 
 }
