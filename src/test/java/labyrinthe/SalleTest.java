@@ -16,12 +16,14 @@ import static org.junit.Assert.*;
  * @author gothmog
  */
 public class SalleTest {
+    private Salle salle;
     
     public SalleTest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
+        
     }
     
     @AfterClass

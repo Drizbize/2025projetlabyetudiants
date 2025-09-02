@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import utils.Vector2;
 
 /**
  *
@@ -39,7 +40,32 @@ public class Etage extends ArrayList<ISalle> implements IEtage {
         // salles
         for (String ligne : lignes){
             mots = ligne.split(" ");
-            // ...
+            Vector2 pos = new Vector2();
+            pos.x = Integer.parseInt(mots[0]);
+            pos.y = Integer.parseInt(mots[1]);
+            
+            ESalle salleType = getTypeFromChar(mots[3].charAt(0));
+            
+            Salle newFloor = new Salle(pos, salleType, this);
+            add(newFloor);
+        }
+    }
+    
+    public ESalle getTypeFromChar(char type)
+    {
+        switch (type) {
+            case 'N':
+                return ESalle.NORMALE;
+            case 'M':
+                return ESalle.ESCALIER_MONTANT;
+            case 'D':
+                return ESalle.ESCALIER_DESCENDANT;
+            case 'E':
+                return ESalle.ENTREE;
+            case 'S':
+                return ESalle.SORTIE;
+            default:
+                throw new AssertionError();
         }
     }
     
