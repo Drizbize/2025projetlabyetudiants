@@ -5,6 +5,8 @@
 package labyrinthe;
 
 import java.util.Objects;
+import static labyrinthe.ESalle.ESCALIER_DESCENDANT;
+import static labyrinthe.ESalle.ESCALIER_MONTANT;
 import utils.Vector2;
 
 /**
@@ -27,6 +29,11 @@ public class Salle implements ISalle {
         m_position = pos;
         m_type = type;
         m_floor = floor;
+    }
+    
+    public Salle(int x, int y, ESalle type, IEtage floor)
+    {
+        this(new Vector2(x, y), type, floor);
     }
     
     @Override
@@ -54,11 +61,23 @@ public class Salle implements ISalle {
         int x = Math.abs(m_position.x - autre.getX());
         int y = Math.abs(m_position.y - autre.getY());
         
-        boolean canGo = (x == 0 && y == 1) || (x == 1 && y == 0);
+        boolean canGo = true;
         
-        return (m_type == ESalle.ESCALIER_MONTANT && autre.getType() == ESalle.ESCALIER_DESCENDANT &&
-                m_floor.getNum() < autre.getEtage().getNum() &&
-                m_position.x == autre.getX() && m_position.y == autre.getY()) && canGo;
+        if (m_type == ESalle.ESCALIER_MONTANT && autre.getType() == ESalle.ESCALIER_DESCENDANT)
+        {
+            canGo &= m_floor.getNum() < autre.getEtage().getNum() && x == 0 && y == 0;
+        }
+        else if (m_type == ESalle.ESCALIER_DESCENDANT && autre.getType() == ESalle.ESCALIER_MONTANT)
+        {
+            canGo &= m_floor.getNum() > autre.getEtage().getNum() && x == 0 && y == 0;
+        }
+        else
+        {
+            canGo &= (x == 0 && y == 1) || (x == 1 && y == 0);
+            canGo &= m_floor == autre.getEtage();
+        }
+        
+        return canGo;
     }
 
     @Override

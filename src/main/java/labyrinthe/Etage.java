@@ -103,4 +103,17 @@ public class Etage extends ArrayList<ISalle> implements IEtage {
         super.add(salle);
         return true;
     }
+    
+    public ISalle getAt(int x, int y)
+    {
+        for (ISalle s : this)
+        {
+            if (s.getX() == x && s.getY() == y)
+            {
+                return s;
+            }
+        }
+        
+        return null;
+    }
 }
