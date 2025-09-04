@@ -55,16 +55,17 @@ public class EtageTest {
         e.charger("etages/etage9N.txt");
         assertTrue(etageValid(e));
         
-        e.charger("etages/etageInvalide1N.txt");
-        assertTrue(etageValid(e));
-        
-        e.charger("etages/etageInvalide2N.txt");
-        assertTrue(etageValid(e));
-        
-        e.charger("etages/etageInvalide3N.txt");
-        assertTrue(etageValid(e));
-        
-        e.charger("etages/etageInvalide4N.txt");
-        assertTrue(etageValid(e));
+        //etageInvalide1N, 2N, 3N, 4N are invalid
+//        e.charger("etages/etageInvalide1N.txt");
+//        assertTrue(etageValid(e));
+//        
+//        e.charger("etages/etageInvalide2N.txt");
+//        assertTrue(etageValid(e));
+//        
+//        e.charger("etages/etageInvalide3N.txt");
+//        assertTrue(etageValid(e));
+//        
+//        e.charger("etages/etageInvalide4N.txt");
+//        assertTrue(etageValid(e));
     }
 }

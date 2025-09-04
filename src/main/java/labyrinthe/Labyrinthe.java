@@ -25,11 +25,39 @@ public final class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
         m_floors.add(etageCourant);
         
         setEtageCourant(m_floors.get(0));
+        
+        for (IEtage e : m_floors)
+        {
+            for (ISalle s : e)
+            {
+                if (s.getType() == ESalle.ENTREE)
+                {
+                    m_roomEnter = s;
+                }
+                else if (s.getType() == ESalle.SORTIE)
+                {
+                    m_roomExit = s;
+                }
+            }
+        }
     }
 
     @Override
-    public Collection<ISalle> sallesAccessibles(IPersonnage heros) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+    public Collection<ISalle> sallesAccessibles(IPersonnage hero) {
+        ArrayList<ISalle> salles = new ArrayList<>();
+        ISalle heroPos = hero.getPosition();
+        
+        for (IEtage floors : m_floors) // not optimized
+        {
+            for (ISalle s : floors)
+            {
+                if (heroPos.estAdjacente(s))
+                    salles.add(s);
+            }
+        }
+        
+        
+        return salles;
     }
 
     @Override
@@ -46,11 +74,31 @@ public final class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
     public IEtage getEtageCourant() {
         return this.etageCourant;
     }
+    
+    @Override
+    public IEtage getUpEtage() {
+        int currentEtageId = m_floors.indexOf(etageCourant);
+        currentEtageId++;
+        if (currentEtageId >= m_floors.size())
+            return null;
+        
+        return m_floors.get(currentEtageId);
+    }
+
+    @Override
+    public IEtage getDownEtage() {
+        int currentEtageId = m_floors.indexOf(etageCourant);
+        currentEtageId--;
+        if (currentEtageId < 0)
+            return null;
+        
+        return m_floors.get(currentEtageId);
+    }
 
     @Override
     public void setEtageCourant(IEtage etage) {
         this.etageCourant = etage;
-        updateEtageEnterExit();
+        //updateEtageEnterExit();
     }
 
     @Override
@@ -58,20 +106,19 @@ public final class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
         return null;
     }
     
-    public void updateEtageEnterExit()
+    public Collection<ISalle> sallesAccessibles(ISalle currentSalle)
     {
-        m_roomEnter = null;
-        m_roomExit = null;
+        ArrayList<ISalle> salles = new ArrayList<>();
         for (ISalle s : etageCourant)
         {
-            if (s.getType() == ESalle.ENTREE)
+            if (currentSalle.estAdjacente(s))
             {
-                m_roomEnter = s;
-            }
-            else if (s.getType() == ESalle.SORTIE)
-            {
-                m_roomExit = s;
+                salles.add(s);
             }
         }
+        
+        return salles;
     }
+
+    
 }

@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.Collection;
 import labyrinthe.ILabyrinthe;
 import labyrinthe.ISalle;
+import personnages.Hero;
 import vue2D.IVue;
+import vue2D.sprites.HeroSprite;
 import vue2D.sprites.ISprite;
 
 /**
@@ -12,7 +14,7 @@ import vue2D.sprites.ISprite;
  * @author arpecher
  */
 public class Core {
-    ISprite heros;
+    ISprite hero;
     ILabyrinthe labyrinthe;
 
     protected void initLabyrinthe() throws IOException {
@@ -22,17 +24,17 @@ public class Core {
 
     protected void initSprites(IVue vue) {
         // creation du heros 
-        //Heros h = new personnages.Heros(labyrinthe.getEntree());
-        //this.heros = new HerosSprite(h, labyrinthe);
-        //vue.add(this.heros);
+        Hero h = new personnages.Hero(labyrinthe.getEntree());
+        this.hero = new HeroSprite(h, labyrinthe);
+        vue.add(this.hero);
     }
 
     protected void jeu(IVue vue) {
         // boucle principale
         ISalle destination = null;
-        while (!labyrinthe.getSortie().equals(heros.getPosition())) {
+        while (!labyrinthe.getSortie().equals(hero.getPosition())) {
             // ajustement etage courant: celui du héros
-            labyrinthe.setEtageCourant(heros.getPosition().getEtage());
+            labyrinthe.setEtageCourant(hero.getPosition().getEtage());
             // choix et deplacements de chaque sprite
             for (ISprite s : vue) {
                 Collection<ISalle> sallesAccessibles = labyrinthe.sallesAccessibles(s);
@@ -44,8 +46,8 @@ public class Core {
             boolean collision = false;
             ISprite monstre = null;
             for (ISprite s : vue) {
-                if (s != heros) {
-                    if (s.getPosition() == heros.getPosition()) {
+                if (s != hero) {
+                    if (s.getPosition() == hero.getPosition()) {
                         System.out.println("Collision !!");
                         collision = true;
                         monstre = s;
@@ -54,7 +56,7 @@ public class Core {
             }
             if (collision) {
                 vue.remove(monstre);
-                vue.remove(heros);
+                vue.remove(hero);
                 System.out.println("Perdu !");
                 System.out.println("Plus que " + vue.size() + " personnages ...");
             }

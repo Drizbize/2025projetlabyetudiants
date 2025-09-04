@@ -104,6 +104,14 @@ public class Dessin extends Canvas {
             tampon.fillRect(posX, posY, unite, unite);
         }
     }
+    
+    public void drawSprites()
+    {
+        for (ISprite sprite : sprites)
+        {
+            sprite.dessiner(tampon);
+        }
+    }
 
     public void dessinPlusCourtChemin(ISprite p) {
         // ...

@@ -1,5 +1,6 @@
 package vue2D.javafx;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import labyrinthe.IEtage;
@@ -7,6 +8,7 @@ import labyrinthe.ILabyrinthe;
 import labyrinthe.ISalle;
 import vue2D.IVue;
 import vue2D.AVue;
+import vue2D.sprites.ISprite;
 
 /**
  *
@@ -25,6 +27,18 @@ public class Vue extends AVue implements IVue {
         this.scene = new Scene(root);
         root.getChildren().add(dessin);
     }
+    
+    @Override
+    public boolean add(ISprite sprite ) {
+        super.add(sprite);
+        
+        if (sprite instanceof EventHandler) {
+            System.out.println("registering keylistener");
+            this.scene.setOnKeyPressed((EventHandler)sprite);
+        }
+        
+        return true;
+    }
 
     @Override
     public void dessiner() {
@@ -34,6 +48,7 @@ public class Vue extends AVue implements IVue {
         
         IEtage e = labyrinthe.getEtageCourant();
         dessin.dessinSalles(e);
+        dessin.drawSprites();
     }
 
 }

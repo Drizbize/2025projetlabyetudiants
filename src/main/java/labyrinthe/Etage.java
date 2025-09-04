@@ -88,13 +88,14 @@ public class Etage extends ArrayList<ISalle> implements IEtage {
     @Override
     public boolean add(ISalle salle)
     {
-        if (!isSalleCollides(salle))
+        if (!isSalleCollides(salle) && (salle.getX() < 0 || salle.getY() < 0 || salle.getX() >= largeur || salle.getY() >= hauteur))
             return false;
         
         super.add(salle);
         return true;
     }
     
+    @Override
     public ISalle getAt(int x, int y)
     {
         for (ISalle s : this)
@@ -115,7 +116,7 @@ public class Etage extends ArrayList<ISalle> implements IEtage {
         
         for (ISalle s : this)
         {
-            if ((s.getX() == x && s.getY() == y) || (s.getX() < 0 || s.getY() < 0 || s.getX() >= largeur || s.getY() >= hauteur))
+            if (s.getX() == x && s.getY() == y)
             {
                 return true;
             }

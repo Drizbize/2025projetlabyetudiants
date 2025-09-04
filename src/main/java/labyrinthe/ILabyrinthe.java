@@ -10,10 +10,12 @@ import personnages.IPersonnage;
  */
 // un labyrinthe est une collection de salles, reparties sur plusieurs etages
 public interface ILabyrinthe extends Collection<ISalle>{ 
-    public Collection<ISalle> sallesAccessibles(IPersonnage heros);  // renvoie les salles accessibles pour le heros
+    public Collection<ISalle> sallesAccessibles(IPersonnage hero);  // renvoie les salles accessibles pour le heros
     public ISalle getEntree(); // accesseur sur l'entree 
     public ISalle getSortie(); // accesseur sur la sortie
     public IEtage getEtageCourant(); // accesseurs sur l'etage affiche
+    public IEtage getUpEtage();
+    public IEtage getDownEtage();
     public void setEtageCourant(IEtage etage);
     public Collection<ISalle> chemin(ISalle u, ISalle v); // un plus court chemin entre u et v
 }
