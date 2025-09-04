@@ -47,10 +47,8 @@ public class Etage extends ArrayList<ISalle> implements IEtage {
             ESalle salleType = getTypeFromChar(mots[2].charAt(0));
             
             Salle newFloor = new Salle(pos, salleType, this);
-            if (!add(newFloor))
-            {
-                System.out.println("Salle is not correct");
-            }
+            add(newFloor);
+            //super.add(newFloor);
         }
     }
     
@@ -90,16 +88,9 @@ public class Etage extends ArrayList<ISalle> implements IEtage {
     @Override
     public boolean add(ISalle salle)
     {
-        int x = salle.getX();
-        int y = salle.getY();
+        if (!isSalleCollides(salle))
+            return false;
         
-        for (ISalle s : this)
-        {
-            if ((s.getX() == x && s.getY() == y) || (s.getX() < 0 || s.getY() < 0 || s.getX() >= largeur || s.getY() >= hauteur))
-            {
-                return false;
-            }
-        }
         super.add(salle);
         return true;
     }
@@ -115,5 +106,20 @@ public class Etage extends ArrayList<ISalle> implements IEtage {
         }
         
         return null;
+    }
+    
+    public boolean isSalleCollides(ISalle salle)
+    {
+        int x = salle.getX();
+        int y = salle.getY();
+        
+        for (ISalle s : this)
+        {
+            if ((s.getX() == x && s.getY() == y) || (s.getX() < 0 || s.getY() < 0 || s.getX() >= largeur || s.getY() >= hauteur))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
