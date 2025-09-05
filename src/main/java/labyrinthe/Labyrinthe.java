@@ -10,7 +10,7 @@ import personnages.IPersonnage;
  * @author professor team
  */
 public final class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
-    private IEtage etageCourant = new Etage();
+    private IEtage etageCourant = new Etage(1);
     private final ArrayList<IEtage> m_floors = new ArrayList<>();
     private ISalle m_roomEnter;
     private ISalle m_roomExit;
@@ -20,7 +20,7 @@ public final class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
         etageCourant.charger("etages/etage1N.txt");
         m_floors.add(etageCourant);
         
-        etageCourant = new Etage();
+        etageCourant = new Etage(2);
         etageCourant.charger("etages/etage2N.txt");
         m_floors.add(etageCourant);
         
@@ -93,6 +93,18 @@ public final class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
             return null;
         
         return m_floors.get(currentEtageId);
+    }
+    
+    @Override
+    public IEtage getEtageFromId(int id)
+    {
+        return m_floors.get(id);
+    }
+    
+    @Override
+    public int getEtageCount()
+    {
+        return m_floors.size();
     }
 
     @Override

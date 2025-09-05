@@ -20,7 +20,6 @@ public abstract class ASprite implements ISprite {
     protected IPersonnage m_person;
     private Image m_img;
     private Vector2 m_pos;
-    private ISalle m_salle;
     
     public ASprite(Image img, IPersonnage person) {
         m_img = img;
@@ -42,18 +41,19 @@ public abstract class ASprite implements ISprite {
     @Override
     public ISalle faitSonChoix(Collection<ISalle> sallesAccessibles) {
         ISalle choice = m_person.faitSonChoix(sallesAccessibles);
-        m_person.setPosition(choice);
+        //setPosition(choice);
+        //System.out.println("AA");
         return choice;
     }
 
     @Override
     public ISalle getPosition() {
-        return m_salle;
+        return m_person.getPosition();
     }
 
     @Override
     public void setPosition(ISalle s) {
-        m_salle = s;
+        m_person.setPosition(s);
         setCoordonnees(s.getX() * AVue.UNITE, s.getY() * AVue.UNITE);
     }
     

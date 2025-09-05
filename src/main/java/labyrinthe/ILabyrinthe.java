@@ -16,6 +16,8 @@ public interface ILabyrinthe extends Collection<ISalle>{
     public IEtage getEtageCourant(); // accesseurs sur l'etage affiche
     public IEtage getUpEtage();
     public IEtage getDownEtage();
+    public IEtage getEtageFromId(int id);
+    public int getEtageCount();
     public void setEtageCourant(IEtage etage);
     public Collection<ISalle> chemin(ISalle u, ISalle v); // un plus court chemin entre u et v
 }

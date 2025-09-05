@@ -5,6 +5,7 @@
 package personnages;
 
 import java.util.Collection;
+import labyrinthe.IEtage;
 import labyrinthe.ILabyrinthe;
 import labyrinthe.ISalle;
 import labyrinthe.Labyrinthe;
@@ -14,13 +15,11 @@ import labyrinthe.Labyrinthe;
  * @author rdanilchenko
  */
 public abstract class APersonnage implements IPersonnage {
-    //private ILabyrinthe m_labyrinthe;
     private ISalle m_salle;
 
-    public APersonnage()
+    public APersonnage(ISalle initSalle)
     {
-        //this.m_labyrinthe = labyrinthe;
-        
+        m_salle = initSalle;
     }
 
     @Override

@@ -10,5 +10,5 @@ import vue2D.sprites.ISprite;
 */
 // une vue est une collection de sprites
 public interface IVue extends Collection<ISprite>{
-    public void dessiner();   
+    public void dessiner();
 }

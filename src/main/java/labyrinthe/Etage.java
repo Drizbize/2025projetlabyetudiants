@@ -1,9 +1,11 @@
 package labyrinthe;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import utils.Vector2;
 
@@ -122,5 +124,19 @@ public class Etage extends ArrayList<ISalle> implements IEtage {
             }
         }
         return false;
+    }
+    
+    public static ArrayList<ISalle> getSallesByType(IEtage etage, ESalle type)
+    {
+        ArrayList<ISalle> salles = new ArrayList<>();
+        for (ISalle s : etage)
+        {
+            if (s.getType() == type)
+            {
+                salles.add(s);
+            }
+        }
+        
+        return salles;
     }
 }

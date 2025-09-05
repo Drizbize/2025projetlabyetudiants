@@ -82,6 +82,5 @@ public class HeroSprite extends ASprite implements EventHandler<KeyEvent>
         }
         
         ((Hero)m_person).salleChoisie = choice;
-        //faitSonChoix(m_labyrinthe.sallesAccessibles(m_person));
     }
 }

@@ -14,17 +14,28 @@ import labyrinthe.ILabyrinthe;
  */
 public class Hero extends APersonnage {
     public ISalle salleChoisie;
+    private ILabyrinthe m_labyrinthe;
     
-    public Hero(ISalle startPos) {
-        setPosition(startPos);
+    public Hero(ILabyrinthe labyrinthe) {
+        super(labyrinthe.getEntree());
+        this.m_labyrinthe = labyrinthe;
+        setPosition(labyrinthe.getEntree());
     }
 
     @Override
     public ISalle faitSonChoix(Collection<ISalle> sallesAccessibles) {
         if (salleChoisie == null || !sallesAccessibles.contains(salleChoisie))
+        {
             return getPosition();
+        }
         
         return salleChoisie;
     }
     
+    @Override
+    public void setPosition(ISalle s)
+    {
+        super.setPosition(s);
+        m_labyrinthe.setEtageCourant(s.getEtage());
+    }
 }
