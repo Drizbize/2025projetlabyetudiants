@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import labyrinthe.IEtage;
 import labyrinthe.ILabyrinthe;
 import labyrinthe.ISalle;
+import personnages.IPersonnage;
 import vue2D.IVue;
 import vue2D.AVue;
 import vue2D.sprites.ISprite;
@@ -47,8 +48,8 @@ public class Vue extends AVue implements IVue {
         // dessin des salles
         
         IEtage e = labyrinthe.getEtageCourant();
-        dessin.dessinSalles(e);
-        dessin.drawSprites();
+        dessin.dessinSalles(e, labyrinthe.getHero());
+        dessin.drawSprites(labyrinthe.getHero());
     }
 
 }

@@ -7,13 +7,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import utils.ExceptionInvalidFile;
 import utils.Vector2;
 
 /**
  *
  * @author INFO Professors team
  */
-public class Etage extends ArrayList<ISalle> implements IEtage {
+public final class Etage extends ArrayList<ISalle> implements IEtage {
 
     private int largeur;
     private int hauteur;
@@ -27,6 +28,12 @@ public class Etage extends ArrayList<ISalle> implements IEtage {
     
     public Etage(int id){
         this.num = id;
+    }
+    
+    public Etage(int id, String file) throws IOException
+    {
+        this.num = id;
+        charger(file);
     }
  
     @Override
@@ -49,7 +56,10 @@ public class Etage extends ArrayList<ISalle> implements IEtage {
             ESalle salleType = getTypeFromChar(mots[2].charAt(0));
             
             Salle newFloor = new Salle(pos, salleType, this);
-            add(newFloor);
+            if (!add(newFloor))
+            {
+                throw new ExceptionInvalidFile("Loading file is invalid");
+            }
             //super.add(newFloor);
         }
     }

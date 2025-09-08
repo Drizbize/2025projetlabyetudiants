@@ -18,6 +18,8 @@ public interface ILabyrinthe extends Collection<ISalle>{
     public IEtage getDownEtage();
     public IEtage getEtageFromId(int id);
     public int getEtageCount();
+    public void setHero(IPersonnage hero);
+    public IPersonnage getHero();
     public void setEtageCourant(IEtage etage);
     public Collection<ISalle> chemin(ISalle u, ISalle v); // un plus court chemin entre u et v
 }

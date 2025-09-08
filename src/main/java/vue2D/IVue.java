@@ -1,6 +1,7 @@
 package vue2D;
 
 import java.util.Collection;
+import personnages.IPersonnage;
 
 import vue2D.sprites.ISprite;
 

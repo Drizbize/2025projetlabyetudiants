@@ -38,6 +38,8 @@ public class Core {
         this.hero = new HeroSprite(h, labyrinthe);
         vue.add(this.hero);
         
+        labyrinthe.setHero(hero);
+        
         for (int i = 0; i < 10; i++)
         {
             spawnMonsterRnd(vue);
@@ -55,7 +57,6 @@ public class Core {
                 Collection<ISalle> sallesAccessibles = labyrinthe.sallesAccessibles(s);
                 destination = s.faitSonChoix(sallesAccessibles); // on demande au personnage de faire son choix de salle
                 s.setPosition(destination); // deplacement
-                
             }
             // detection des collisions
             boolean collision = false;

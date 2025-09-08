@@ -10,6 +10,7 @@ import personnages.IPersonnage;
  * @author professor team
  */
 public final class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
+    private IPersonnage m_hero;
     private IEtage etageCourant = new Etage(1);
     private final ArrayList<IEtage> m_floors = new ArrayList<>();
     private ISalle m_roomEnter;
@@ -130,6 +131,17 @@ public final class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
         }
         
         return salles;
+    }
+    
+    @Override
+    public void setHero(IPersonnage hero)
+    {
+        m_hero = hero;
+    }
+    
+    @Override
+    public IPersonnage getHero() {
+        return m_hero;
     }
 
     

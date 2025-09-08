@@ -3,14 +3,19 @@ package vue2D.javafx;
 import java.util.Collection;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import static labyrinthe.ESalle.ESCALIER_DESCENDANT;
 import labyrinthe.ILabyrinthe;
 import labyrinthe.ISalle;
 import vue2D.AVue;
 import vue2D.sprites.ISprite;
 import labyrinthe.IEtage;
+import personnages.IPersonnage;
+import utils.Utils;
+import utils.Vector2;
 
 /**
  *
@@ -59,18 +64,19 @@ public class Dessin extends Canvas {
     }
 
     public void dessinFond() {
-        tampon.drawImage(solImage, 0, 0, unite * largeur,
-                unite * hauteur);
+        tampon.setGlobalAlpha(1.0);
+        //tampon.setFill(Color.BLACK);
+        //tampon.fillRect(0, 0, unite * largeur, unite * hauteur);
+        tampon.drawImage(solImage, 0, 0, unite * largeur, unite * hauteur);
     }
 
-    public void dessinSalles(IEtage etage) {
+    public void dessinSalles(IEtage etage, IPersonnage hero) {
         for (ISalle s : etage) {
-            //Color c = Color.rgb(200, 200, 200);
-            dessinSalle(s);
+            dessinSalle(s, hero);
         }
     }
 
-    public void dessinSalle(ISalle s) {
+    public void dessinSalle(ISalle s, IPersonnage hero) {
         int posX = unite * s.getX();
         int posY = unite * s.getY();
         
@@ -94,28 +100,60 @@ public class Dessin extends Canvas {
                 break;
         }
         
+        double coef = 1.0;
+        if (hero != null)
+        {
+            coef = getCoefDistance(new Vector2(s.getX(), s.getY()), new Vector2(hero.getPosition().getX(), hero.getPosition().getY()));
+        }
+        
+        if (coef <= 0.0)
+            return;
+        
         if (img != null)
         {
+            tampon.setGlobalAlpha(coef);
             tampon.drawImage(img, posX, posY, unite, unite);
         }
         else if (c != null)
         {
+            tampon.setGlobalAlpha(coef);
             tampon.setFill(c);
+            
             tampon.fillRect(posX, posY, unite, unite);
         }
     }
     
-    public void drawSprites()
+    public void drawSprites(IPersonnage hero)
     {
+        
+        
         for (ISprite sprite : sprites)
         {
             if (sprite.getPosition().getEtage() == labyrinthe.getEtageCourant())
-                sprite.dessiner(tampon);
+            {
+                double coef = getCoefDistance(
+                    new Vector2(sprite.getPosition().getX(), sprite.getPosition().getY()),
+                    new Vector2(hero.getPosition().getX(), hero.getPosition().getY()));
+                
+                if (coef > 0.0)
+                {
+                    tampon.setGlobalAlpha(coef);
+                    sprite.dessiner(tampon);
+                }
+                    
+            }
+                
         }
     }
 
     public void dessinPlusCourtChemin(ISprite p) {
         // ...
+    }
+    
+    private double getCoefDistance(Vector2 pos1, Vector2 pos2)
+    {
+        Vector2 dist = new Vector2(pos2.x - pos1.x, pos2.y - pos1.y);
+        return Utils.clamp((8 / (dist.getMagnitude() + 1)) - 0.75, 0.0, 1.0);
     }
 
 }
