@@ -28,7 +28,7 @@ public class Core {
 
     protected void initLabyrinthe() throws IOException {
         // creation du labyrinthe
-        labyrinthe = new labyrinthe.Labyrinthe();
+        labyrinthe = new labyrinthe.LabyrintheGraphe(new String[] {"etages/etage1N.txt", "etages/etage2N.txt"});
     }
 
     protected void initSprites(IVue vue) {

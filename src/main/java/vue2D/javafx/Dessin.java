@@ -125,8 +125,6 @@ public class Dessin extends Canvas {
     
     public void drawSprites(IPersonnage hero)
     {
-        
-        
         for (ISprite sprite : sprites)
         {
             if (sprite.getPosition().getEtage() == labyrinthe.getEtageCourant())
@@ -146,8 +144,21 @@ public class Dessin extends Canvas {
         }
     }
 
-    public void dessinPlusCourtChemin(ISprite p) {
-        // ...
+    public void dessinPlusCourtChemin(IPersonnage p) {
+        Collection<ISalle> pathSalles = labyrinthe.chemin(p.getPosition(), sortie);
+        if (pathSalles == null)
+            return;
+        
+        for (ISalle s : pathSalles)
+        {
+            if (s.getEtage() != labyrinthe.getEtageCourant())
+            {
+                break;
+            }
+            tampon.setGlobalAlpha(0.3);
+            tampon.setFill(Color.CYAN);
+            tampon.fillRect(s.getX() * unite, s.getY() * unite, unite, unite);
+        }
     }
     
     private double getCoefDistance(Vector2 pos1, Vector2 pos2)

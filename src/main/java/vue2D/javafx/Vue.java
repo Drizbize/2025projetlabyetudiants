@@ -50,6 +50,7 @@ public class Vue extends AVue implements IVue {
         IEtage e = labyrinthe.getEtageCourant();
         dessin.dessinSalles(e, labyrinthe.getHero());
         dessin.drawSprites(labyrinthe.getHero());
+        dessin.dessinPlusCourtChemin(labyrinthe.getHero());
     }
 
 }

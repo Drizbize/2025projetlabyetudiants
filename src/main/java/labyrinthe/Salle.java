@@ -85,7 +85,7 @@ public class Salle implements ISalle {
         int hash = 7;
         hash = 29 * hash + Objects.hashCode(this.m_position);
         hash = 29 * hash + Objects.hashCode(this.m_type);
-        hash = 29 * hash + Objects.hashCode(this.m_floor);
+        hash = 29 * hash + Objects.hashCode(this.m_floor.getNum());
         return hash;
     }
 
