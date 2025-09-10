@@ -45,6 +45,7 @@ public abstract class ASprite implements ISprite {
     @Override
     public ISalle faitSonChoix(Collection<ISalle> sallesAccessibles) {
         ISalle choice = m_person.faitSonChoix(sallesAccessibles);
+        
         return choice;
     }
 

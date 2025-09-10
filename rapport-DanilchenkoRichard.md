@@ -19,3 +19,9 @@
 - lighting around plyaer. Player can not see all the labyrinthe and monsters. He is limited with 7-8 blocks lighting
 ## 08/09/2025 - Bug fix
 - bug fix lighting monsters
+## 09/09/2025 - Labyrinthe graph
+- new labyrinthe graph
+- algorithm the shortest path
+- drawing the shortest path
+## 10/09/2025 - Dragon
+- new dragon, he follows the hero with 50% chance to go foward him

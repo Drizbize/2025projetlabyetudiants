@@ -9,10 +9,12 @@ import labyrinthe.Etage;
 import labyrinthe.IEtage;
 import labyrinthe.ILabyrinthe;
 import labyrinthe.ISalle;
+import personnages.Dragon;
 import personnages.Hero;
 import personnages.IPersonnage;
 import personnages.Monster;
 import vue2D.IVue;
+import vue2D.sprites.DragonSprite;
 import vue2D.sprites.HeroSprite;
 import vue2D.sprites.ISprite;
 import vue2D.sprites.MonsterSprite;
@@ -39,6 +41,10 @@ public class Core {
         vue.add(this.hero);
         
         labyrinthe.setHero(hero);
+        
+        Dragon d = new Dragon(getRandomSalle(), labyrinthe);
+        DragonSprite dSprite = new DragonSprite(d);
+        vue.add(dSprite);
         
         for (int i = 0; i < 10; i++)
         {
@@ -89,14 +95,19 @@ public class Core {
         }
     }
     
+    protected ISalle getRandomSalle()
+    {
+        IEtage rndEtage = labyrinthe.getEtageFromId(rnd.nextInt(labyrinthe.getEtageCount()));
+        ArrayList<ISalle> normalSalles = Etage.getSallesByType(rndEtage, ESalle.NORMALE);
+        return normalSalles.get(rnd.nextInt(normalSalles.size()));
+    }
+    
     protected void spawnMonsterRnd(IVue vue)
     {
         ISalle selectedSalle = null;
         while (selectedSalle == null)
         {
-            IEtage rndEtage = labyrinthe.getEtageFromId(rnd.nextInt(labyrinthe.getEtageCount()));
-            ArrayList<ISalle> normalSalles = Etage.getSallesByType(rndEtage, ESalle.NORMALE);
-            ISalle s = normalSalles.get(rnd.nextInt(normalSalles.size()));
+            ISalle s = getRandomSalle();
             
             boolean isCollide = false;
             for (ISprite entity : vue)

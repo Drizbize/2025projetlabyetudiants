@@ -31,11 +31,4 @@ public class Hero extends APersonnage {
         
         return salleChoisie;
     }
-    
-    @Override
-    public void setPosition(ISalle s)
-    {
-        super.setPosition(s);
-        m_labyrinthe.setEtageCourant(s.getEtage());
-    }
 }

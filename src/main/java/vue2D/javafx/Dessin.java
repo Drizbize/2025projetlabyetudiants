@@ -151,13 +151,13 @@ public class Dessin extends Canvas {
         
         for (ISalle s : pathSalles)
         {
-            if (s.getEtage() != labyrinthe.getEtageCourant())
+            if (s.getEtage() == labyrinthe.getEtageCourant())
             {
-                break;
+                tampon.setGlobalAlpha(0.3);
+                tampon.setFill(Color.CYAN);
+                tampon.fillRect(s.getX() * unite, s.getY() * unite, unite, unite);
             }
-            tampon.setGlobalAlpha(0.3);
-            tampon.setFill(Color.CYAN);
-            tampon.fillRect(s.getX() * unite, s.getY() * unite, unite, unite);
+            
         }
     }
     
