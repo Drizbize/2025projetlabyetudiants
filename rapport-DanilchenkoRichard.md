@@ -27,6 +27,10 @@
 - new dragon, he follows the hero with 50% chance to go foward him
 ## 11/09/2025
 - all entites has speed attribute
+- drawing objects within distance salle by player using graph shortest path
 - changed dragon player follow to standart follow but his speed is 2 (much slower then player)
 - player can remember rooms when he saw them. But not other monsters
 - comments for almost all implimented functions
+
+## Difficultes
+1. Collection.toArray() blocks program forever, so it wasn't understandable why game was just freezed with no reason. With debug mode the problem found.
