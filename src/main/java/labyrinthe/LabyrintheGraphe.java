@@ -19,6 +19,11 @@ import org.jgrapht.graph.SimpleGraph;
 public class LabyrintheGraphe extends Labyrinthe {
     private final SimpleGraph<ISalle, DefaultEdge> m_graph = new SimpleGraph<>(DefaultEdge.class);
     
+    /**
+     * Initialazing the normal Labyrinthe and graph
+     * @param etagesFiles
+     * @throws IOException 
+     */
     public LabyrintheGraphe(String[] etagesFiles) throws IOException {
         super(etagesFiles);
         

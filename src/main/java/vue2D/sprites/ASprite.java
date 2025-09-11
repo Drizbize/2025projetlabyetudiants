@@ -10,7 +10,6 @@ import javafx.scene.image.Image;
 import labyrinthe.ISalle;
 import personnages.IPersonnage;
 import utils.Utils;
-import utils.Vector2;
 import vue2D.AVue;
 
 /**
@@ -20,26 +19,36 @@ import vue2D.AVue;
 public abstract class ASprite implements ISprite {
     protected IPersonnage m_person;
     private Image m_img;
-    private Vector2 m_pos;
+    private double m_posXf;
+    private double m_posYf;
     private ISalle m_prevSalle;
     private ISalle m_selectedSalle;
+    private double m_speed;
     
-    public ASprite(Image img, IPersonnage person) {
+    public ASprite(Image img, IPersonnage person, int speed) {
         m_img = img;
-        m_pos = new Vector2();
+        m_posXf = 0.0;
+        m_posYf = 0.0;
         m_person = person;
         m_prevSalle = person.getPosition();
+        m_speed = (double)speed / 100;
     }
 
     @Override
     public void dessiner(GraphicsContext g) {
-        g.drawImage(m_img, m_pos.x, m_pos.y, AVue.UNITE, AVue.UNITE);
+        g.drawImage(m_img, (int)m_posXf, (int)m_posYf, AVue.UNITE, AVue.UNITE);
     }
 
     @Override
     public void setCoordonnees(int xpix, int ypix) {
-        m_pos.x = xpix;
-        m_pos.y = ypix;
+        m_posXf = xpix;
+        m_posYf = ypix;
+    }
+    
+    @Override
+    public void setCoordonnees(double xpix, double ypix) {
+        m_posXf = xpix;
+        m_posYf = ypix;
     }
 
     @Override
@@ -82,14 +91,14 @@ public abstract class ASprite implements ISprite {
         double dirX = endX - startX;
         double dirY = endY - startY;
 
-        double coefX = dirX != 0 ? (m_pos.x - startX) / dirX : 1.0;
-        double coefY = dirY != 0 ? (m_pos.y - startY) / dirY : 1.0;
+        double coefX = dirX != 0 ? (m_posXf - startX) / dirX : 1.0;
+        double coefY = dirY != 0 ? (m_posYf - startY) / dirY : 1.0;
 
-        coefX = Math.min(coefX + 0.1, 1.0);
-        coefY = Math.min(coefY + 0.1, 1.0);
+        coefX = Math.min(coefX + m_speed, 1.0);
+        coefY = Math.min(coefY + m_speed, 1.0);
 
-        int newX = (int)Utils.lerp(startX, endX, coefX);
-        int newY = (int)Utils.lerp(startY, endY, coefY);
+        double newX = Utils.lerp(startX, endX, coefX);
+        double newY = Utils.lerp(startY, endY, coefY);
 
         setCoordonnees(newX, newY);
 

@@ -121,6 +121,11 @@ public final class Etage extends ArrayList<ISalle> implements IEtage {
         return null;
     }
     
+    /**
+     * checks if current salle has the same position with other one
+     * @param salle the salle to check
+     * @return true if collides
+     */
     public boolean isSalleCollides(ISalle salle)
     {
         int x = salle.getX();
@@ -136,6 +141,12 @@ public final class Etage extends ArrayList<ISalle> implements IEtage {
         return false;
     }
     
+    /**
+     * creates a list of salles who has the same type from etage
+     * @param etage etage class
+     * @param type type to select
+     * @return list of salles of one type
+     */
     public static ArrayList<ISalle> getSallesByType(IEtage etage, ESalle type)
     {
         ArrayList<ISalle> salles = new ArrayList<>();

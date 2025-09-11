@@ -25,7 +25,7 @@ public class HeroSprite extends ASprite implements EventHandler<KeyEvent>
     private ILabyrinthe m_labyrinthe;
     
     public HeroSprite(Hero hero, ILabyrinthe labyrinthe) {
-        super(new Image("file:icons/link/LinkRunShieldL1.gif"), hero);
+        super(new Image("file:icons/link/LinkRunShieldL1.gif"), hero, 10);
         m_labyrinthe = labyrinthe;
         setPosition(hero.getPosition());
     }

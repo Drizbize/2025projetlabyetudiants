@@ -16,6 +16,10 @@ public class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
     private ISalle m_roomEnter;
     private ISalle m_roomExit;
     
+    /**
+     * Creating labyrinthe from etages
+     * @param etages 
+     */
     public Labyrinthe(ArrayList<IEtage> etages)
     {
         m_floors = new ArrayList<>(etages);
@@ -23,11 +27,20 @@ public class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
         m_updateEnterExit();
     }
     
+    /**
+     * Copy constructor
+     * @param l other
+     */
     public Labyrinthe(Labyrinthe l)
     {
-        this(l.m_floors);
+        this(new ArrayList<>(l.m_floors));
     }
     
+    /**
+     * Creating labyrinthe from file pathes
+     * @param etagesFiles array of file pathes
+     * @throws IOException 
+     */
     public Labyrinthe(String[] etagesFiles) throws IOException
     {
         m_floors = new ArrayList<>();
@@ -40,7 +53,6 @@ public class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
         }
         
         setEtageCourant(m_floors.get(0));
-        
         m_updateEnterExit();
     }
 
@@ -107,21 +119,16 @@ public class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
         return null;
     }
     
-    public Collection<ISalle> sallesAccessiblesBySalle(ISalle currentSalle)
+    @Override
+    public int getDistance(ISalle s1, ISalle s2) throws RuntimeException
     {
-        ArrayList<ISalle> salles = new ArrayList<>();
-        for (IEtage floors : m_floors) // not optimized
+        Collection<ISalle> path = chemin(s1, s2);
+        if (path == null)
         {
-            for (ISalle s : floors)
-            {
-                if (currentSalle.estAdjacente(s))
-                {
-                    salles.add(s);
-                }
-            }
+            throw new RuntimeException("Error: path is null");
+            //return -1;
         }
-        
-        return salles;
+        return path.size() - 1;
     }
     
     @Override
@@ -134,7 +141,11 @@ public class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
     public IPersonnage getHero() {
         return m_hero;
     }
-
+    
+    /**
+     * updates variables enter and exit.
+     * checks all etages of labyrinthe
+     */
     private void m_updateEnterExit()
     {
         for (IEtage e : m_floors)
@@ -151,5 +162,27 @@ public class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
                 }
             }
         }
+    }
+    
+    /**
+     * checking all salles by all etages to check if currentSalle estAdjacente
+     * @param currentSalle the salle to check
+     * @return a list of salles that are "adjacente"
+     */
+    public Collection<ISalle> sallesAccessiblesBySalle(ISalle currentSalle)
+    {
+        ArrayList<ISalle> salles = new ArrayList<>();
+        for (IEtage floors : m_floors) // not optimized
+        {
+            for (ISalle s : floors)
+            {
+                if (currentSalle.estAdjacente(s))
+                {
+                    salles.add(s);
+                }
+            }
+        }
+        
+        return salles;
     }
 }

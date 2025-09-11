@@ -25,3 +25,8 @@
 - drawing the shortest path
 ## 10/09/2025 - Dragon
 - new dragon, he follows the hero with 50% chance to go foward him
+## 11/09/2025
+- all entites has speed attribute
+- changed dragon player follow to standart follow but his speed is 2 (much slower then player)
+- player can remember rooms when he saw them. But not other monsters
+- comments for almost all implimented functions

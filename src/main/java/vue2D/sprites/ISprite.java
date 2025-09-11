@@ -9,6 +9,7 @@ import personnages.IPersonnage;
 */
 // un sprite est un personnage, que l'on peut dessiner
 public interface ISprite extends IPersonnage{
-	public void dessiner(GraphicsContext g);
-	public void setCoordonnees(int xpix, int ypix);
+    public void dessiner(GraphicsContext g);
+    public void setCoordonnees(int xpix, int ypix);
+    public void setCoordonnees(double xpix, double ypix);
 }

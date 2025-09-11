@@ -8,6 +8,8 @@ package labyrinthe;
 public interface ISalle {
     public int getX(); // abcisse
     public int getY(); // ordonnee
+    public void setVisited(boolean value);
+    public boolean isVisited();
     public ESalle getType(); // type
     public IEtage getEtage(); // etage de la salle
     public boolean estAdjacente( ISalle autre); // indique si une salle est adjacente a une autre

@@ -21,13 +21,17 @@ public class Vector2 {
         this.x = x;
         this.y = y;
     }
-    
+
     public void plus(Vector2 other)
     {
         x += other.x;
         y += other.y;
     }
     
+    /**
+     * Magnitude of the current vector
+     * @return magnitude distance
+     */
     public double getMagnitude()
     {
         return Math.sqrt(x * x + y * y);

@@ -14,7 +14,7 @@ import personnages.IPersonnage;
 public class DragonSprite extends ASprite {
     
     public DragonSprite(IPersonnage person) {
-        super(new Image("file:icons/monstre1.gif"), person);
+        super(new Image("file:icons/monstre1.gif"), person, 2);
     }
     
 }

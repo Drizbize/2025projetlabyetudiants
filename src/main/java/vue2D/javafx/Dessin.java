@@ -22,6 +22,10 @@ import utils.Vector2;
  * @author INFO Professors team
  */
 public class Dessin extends Canvas {
+    /**
+     * Max view distance of player in labyrinthe
+     */
+    private static int MAX_VIEW_DISTANCE = 10;
 
     private Collection<ISprite> sprites;
     private int unite;
@@ -40,7 +44,8 @@ public class Dessin extends Canvas {
     private Image escalierD;
     private int tailleLinkH = 6;
     private int tailleLinkL = 2;
-
+    
+    
     public Dessin(ILabyrinthe labyrinthe, Collection<ISprite> sprites) {
         this.labyrinthe = labyrinthe;
         this.sprites = sprites;
@@ -55,27 +60,44 @@ public class Dessin extends Canvas {
         chargementImages();
         dessinFond();
     }
-
+    
+    /**
+     * loading some images
+     */
     public void chargementImages() {
         murImage = new Image("file:icons/mur0.gif");
         solImage = new Image("file:icons/pyramide.png");
         escalierM = new Image("file:icons/up.gif");
         escalierD = new Image("file:icons/down.gif");
     }
-
+    
+    /**
+     * draw the background of the game
+     */
     public void dessinFond() {
         tampon.setGlobalAlpha(1.0);
         //tampon.setFill(Color.BLACK);
         //tampon.fillRect(0, 0, unite * largeur, unite * hauteur);
         tampon.drawImage(solImage, 0, 0, unite * largeur, unite * hauteur);
     }
-
+    
+    /**
+     * Draws all salles on the precised etage
+     * @param etage the etage
+     * @param hero the player
+     */
     public void dessinSalles(IEtage etage, IPersonnage hero) {
         for (ISalle s : etage) {
             dessinSalle(s, hero);
         }
     }
-
+    
+    /**
+     * Draws a salle.
+     * Salles that are too far from player doesnt draw. But if player saw that salle so it will draws from far distance
+     * @param s the salle
+     * @param hero the player
+     */
     public void dessinSalle(ISalle s, IPersonnage hero) {
         int posX = unite * s.getX();
         int posY = unite * s.getY();
@@ -101,13 +123,26 @@ public class Dessin extends Canvas {
         }
         
         double coef = 1.0;
-        if (hero != null)
-        {
-            coef = getCoefDistance(new Vector2(s.getX(), s.getY()), new Vector2(hero.getPosition().getX(), hero.getPosition().getY()));
-        }
         
-        if (coef <= 0.0)
-            return;
+        if (!s.isVisited())
+        {
+            if (hero != null)
+            {
+                coef = getCoefDistance(new Vector2(s.getX(), s.getY()), new Vector2(hero.getPosition().getX(), hero.getPosition().getY()));
+            }
+            
+            if (coef <= 0.0)
+                return;
+            
+            int dist = labyrinthe.getDistance(hero.getPosition(), s);
+            if (dist > MAX_VIEW_DISTANCE)
+                return;
+            
+            if (coef >= 0.75)
+            {
+                s.setVisited(true);
+            }
+        }
         
         if (img != null)
         {
@@ -123,6 +158,11 @@ public class Dessin extends Canvas {
         }
     }
     
+    /**
+     * Draws all sprites in the game on current etage where player is.
+     * Sprites that are too far away from player is not drawing
+     * @param hero player
+     */
     public void drawSprites(IPersonnage hero)
     {
         for (ISprite sprite : sprites)
@@ -133,17 +173,24 @@ public class Dessin extends Canvas {
                     new Vector2(sprite.getPosition().getX(), sprite.getPosition().getY()),
                     new Vector2(hero.getPosition().getX(), hero.getPosition().getY()));
                 
-                if (coef > 0.0)
-                {
-                    tampon.setGlobalAlpha(coef);
-                    sprite.dessiner(tampon);
-                }
-                    
+                if (coef <= 0.0)
+                    continue;
+                 
+                int dist = labyrinthe.getDistance(hero.getPosition(), sprite.getPosition());
+                if (dist > MAX_VIEW_DISTANCE)
+                    continue;
+                
+                tampon.setGlobalAlpha(coef);
+                sprite.dessiner(tampon);
             }
                 
         }
     }
-
+    
+    /**
+     * Draws the shortest path from player's position to the exit
+     * @param p player
+     */
     public void dessinPlusCourtChemin(IPersonnage p) {
         Collection<ISalle> pathSalles = labyrinthe.chemin(p.getPosition(), sortie);
         if (pathSalles == null)
@@ -161,6 +208,12 @@ public class Dessin extends Canvas {
         }
     }
     
+    /**
+     * Calculating within the formula the distance coef
+     * @param pos1 from position
+     * @param pos2 to position
+     * @return the coeficient from 0.0 to 1.0
+     */
     private double getCoefDistance(Vector2 pos1, Vector2 pos2)
     {
         Vector2 dist = new Vector2(pos2.x - pos1.x, pos2.y - pos1.y);

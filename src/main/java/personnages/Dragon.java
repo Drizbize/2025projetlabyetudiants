@@ -26,17 +26,6 @@ public class Dragon extends APersonnage {
 
     @Override
     public ISalle faitSonChoix(Collection<ISalle> sallesAccessibles) {
-        if (m_rnd.nextBoolean()) // to be more simple to play
-        {
-            ArrayList<ISalle> salles = new ArrayList<>();
-            for (ISalle s : sallesAccessibles)
-            {
-                salles.add(s);
-            }
-
-            return salles.get(m_rnd.nextInt(sallesAccessibles.size()));
-        }
-        
         List<ISalle> path = (List<ISalle>)m_labyrinthe.chemin(getPosition(), m_labyrinthe.getHero().getPosition());
         if (path != null && path.size() > 1)
         {

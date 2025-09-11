@@ -17,11 +17,13 @@ public class Salle implements ISalle {
     private Vector2 m_position;
     private ESalle m_type;
     private IEtage m_floor;
+    private boolean m_visited;
     
     public Salle()
     {
        m_type = ESalle.NORMALE;
        m_floor = new Etage();
+       m_visited = false;
     }
     
     public Salle(Vector2 pos, ESalle type, IEtage floor)
@@ -79,6 +81,16 @@ public class Salle implements ISalle {
         
         return canGo;
     }
+    
+    @Override
+    public void setVisited(boolean value) {
+        m_visited = value;
+    }
+
+    @Override
+    public boolean isVisited() {
+        return m_visited;
+    }
 
     @Override
     public int hashCode() {
@@ -109,6 +121,4 @@ public class Salle implements ISalle {
         }
         return Objects.equals(this.m_floor, other.m_floor);
     }
-    
-    
 }
