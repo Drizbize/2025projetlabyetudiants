@@ -7,6 +7,7 @@ import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import static labyrinthe.ESalle.ESCALIER_DESCENDANT;
 import labyrinthe.ILabyrinthe;
 import labyrinthe.ISalle;
@@ -124,23 +125,27 @@ public class Dessin extends Canvas {
         
         double coef = 1.0;
         
-        if (!s.isVisited())
+        if (hero != null)
         {
-            if (hero != null)
+            coef = getCoefDistance(new Vector2(s.getX(), s.getY()), new Vector2(hero.getPosition().getX(), hero.getPosition().getY()));
+            
+            if (!s.isVisited())
             {
-                coef = getCoefDistance(new Vector2(s.getX(), s.getY()), new Vector2(hero.getPosition().getX(), hero.getPosition().getY()));
+                if (coef <= 0.0)
+                    return;
+
+                int dist = labyrinthe.getDistance(hero.getPosition(), s);
+                if (dist > MAX_VIEW_DISTANCE)
+                    return;
+
+                if (coef >= 0.75)
+                {
+                    s.setVisited(true);
+                }
             }
-            
-            if (coef <= 0.0)
-                return;
-            
-            int dist = labyrinthe.getDistance(hero.getPosition(), s);
-            if (dist > MAX_VIEW_DISTANCE)
-                return;
-            
-            if (coef >= 0.75)
+            else if (coef <= 0.2)
             {
-                s.setVisited(true);
+                coef = 0.2;
             }
         }
         
@@ -169,16 +174,20 @@ public class Dessin extends Canvas {
         {
             if (sprite.getPosition().getEtage() == labyrinthe.getEtageCourant())
             {
-                double coef = getCoefDistance(
-                    new Vector2(sprite.getPosition().getX(), sprite.getPosition().getY()),
-                    new Vector2(hero.getPosition().getX(), hero.getPosition().getY()));
-                
-                if (coef <= 0.0)
-                    continue;
-                 
-                int dist = labyrinthe.getDistance(hero.getPosition(), sprite.getPosition());
-                if (dist > MAX_VIEW_DISTANCE)
-                    continue;
+                double coef = 1.f;
+                if (hero != null)
+                {
+                    coef = getCoefDistance(
+                        new Vector2(sprite.getPosition().getX(), sprite.getPosition().getY()),
+                        new Vector2(hero.getPosition().getX(), hero.getPosition().getY()));
+                    
+                    if (coef <= 0.0)
+                        continue;
+
+                    int dist = labyrinthe.getDistance(hero.getPosition(), sprite.getPosition());
+                    if (dist > MAX_VIEW_DISTANCE)
+                        continue;
+                }
                 
                 tampon.setGlobalAlpha(coef);
                 sprite.dessiner(tampon);
@@ -192,6 +201,9 @@ public class Dessin extends Canvas {
      * @param p player
      */
     public void dessinPlusCourtChemin(IPersonnage p) {
+        if (p == null)
+            return;
+        
         Collection<ISalle> pathSalles = labyrinthe.chemin(p.getPosition(), sortie);
         if (pathSalles == null)
             return;
@@ -206,6 +218,11 @@ public class Dessin extends Canvas {
             }
             
         }
+    }
+    
+    public void drawGameOver()
+    {
+        tampon.fillText("Game Over", 20 * unite, 20 * unite);
     }
     
     /**

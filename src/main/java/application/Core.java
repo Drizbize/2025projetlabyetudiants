@@ -79,6 +79,7 @@ public class Core {
             if (collision) {
                 vue.remove(monstre);
                 vue.remove(hero);
+                labyrinthe.setHero(null);
                 System.out.println("Perdu !");
                 System.out.println("Plus que " + vue.size() + " personnages ...");
             }

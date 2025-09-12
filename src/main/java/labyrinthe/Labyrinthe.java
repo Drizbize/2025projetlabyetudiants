@@ -162,6 +162,15 @@ public class Labyrinthe extends ArrayList<ISalle> implements ILabyrinthe {
                 }
             }
         }
+        
+        if (m_roomEnter == null)
+        {
+            throw new RuntimeException("No enter");
+        }
+        if (m_roomExit == null)
+        {
+            throw new RuntimeException("No exit");
+        }
     }
     
     /**
