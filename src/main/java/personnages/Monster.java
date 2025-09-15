@@ -15,7 +15,7 @@ import labyrinthe.ISalle;
  * @author rdanilchenko
  */
 public class Monster extends APersonnage {
-    Random rnd = new Random();
+    private static Random _rnd = new Random();
 
     public Monster(ISalle initPos) {
         super(initPos);
@@ -32,6 +32,6 @@ public class Monster extends APersonnage {
             salles.add(s);
         }
         
-        return salles.get(rnd.nextInt(sallesAccessibles.size()));
+        return salles.get(_rnd.nextInt(sallesAccessibles.size()));
     }
 }

@@ -17,7 +17,6 @@ import labyrinthe.ISalle;
  */
 public class Dragon extends APersonnage {
     private ILabyrinthe m_labyrinthe;
-    private Random m_rnd = new Random();
 
     public Dragon(ISalle initSalle, ILabyrinthe l) {
         super(initSalle);

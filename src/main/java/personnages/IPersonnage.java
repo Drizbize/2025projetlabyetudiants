@@ -11,5 +11,5 @@ import labyrinthe.ISalle;
 public interface IPersonnage {
     public ISalle faitSonChoix(Collection<ISalle> sallesAccessibles); // renvoie une salle parmi sallesAccesibles
     public ISalle getPosition(); // renvoie sa position courante
-    public void setPosition( ISalle s); // definit sa position courante
+    public void setPosition(ISalle s); // definit sa position courante
 }
