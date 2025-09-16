@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import static labyrinthe.ESalle.ESCALIER_DESCENDANT;
+import labyrinthe.Etage;
 import labyrinthe.ILabyrinthe;
 import labyrinthe.ISalle;
 import vue2D.AVue;
@@ -138,14 +139,14 @@ public class Dessin extends Canvas {
                 if (dist > MAX_VIEW_DISTANCE)
                     return;
 
-                if (coef >= 0.75)
+                if (dist <= 2)
                 {
                     s.setVisited(true);
                 }
             }
-            else if (coef <= 0.2)
+            else if (coef <= 0.25)
             {
-                coef = 0.2;
+                coef = 0.25;
             }
         }
         
@@ -160,6 +161,16 @@ public class Dessin extends Canvas {
             tampon.setFill(c);
             
             tampon.fillRect(posX, posY, unite, unite);
+        }
+        
+        for (Vector2 dir : Utils.DIRECTION_POSITIONS)
+        {
+            Vector2 wallPos = new Vector2(s.getX() + dir.x, s.getY() + dir.y);
+            boolean isWall = s.getEtage().isWallAt(wallPos.x, wallPos.y);
+            if (isWall)
+            {
+                tampon.drawImage(murImage, wallPos.x * unite, wallPos.y * unite, unite, unite);
+            }
         }
     }
     
@@ -218,6 +229,10 @@ public class Dessin extends Canvas {
             }
             
         }
+    }
+    
+    public void drawWalls()
+    {
     }
     
     public void drawGameOver()

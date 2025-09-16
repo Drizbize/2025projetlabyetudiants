@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import utils.ExceptionInvalidFile;
+import utils.Utils;
 import utils.Vector2;
 
 /**
@@ -15,19 +16,21 @@ import utils.Vector2;
  * @author INFO Professors team
  */
 public final class Etage extends ArrayList<ISalle> implements IEtage {
-
     private int largeur;
     private int hauteur;
     private int num;
+    private boolean[][] m_walls;
     
     public Etage(){
         largeur = 40;
         hauteur = 40;
+        m_walls = new boolean[hauteur][largeur];
         num = 1;
     }
     
     public Etage(int id){
         this.num = id;
+        m_walls = new boolean[hauteur][largeur];
     }
     
     public Etage(int id, String file) throws IOException
@@ -60,7 +63,22 @@ public final class Etage extends ArrayList<ISalle> implements IEtage {
             {
                 throw new ExceptionInvalidFile("Loading file is invalid");
             }
-            //super.add(newFloor);
+        }
+        
+        m_walls = new boolean[hauteur][largeur];
+        for (ISalle s : this)
+        {
+            int posX = s.getX();
+            int posY = s.getY();
+            for (Vector2 position : Utils.DIRECTION_POSITIONS)
+            {
+                Vector2 wallPos = new Vector2(posX + position.x, posY + position.y);
+               
+                if (getAt(wallPos.x, wallPos.y) == null && !isOutOfMap(wallPos.x, wallPos.y))
+                {
+                    m_walls[wallPos.y][wallPos.x] = true;
+                }
+            }
         }
     }
     
@@ -100,7 +118,7 @@ public final class Etage extends ArrayList<ISalle> implements IEtage {
     @Override
     public boolean add(ISalle salle)
     {
-        if (!isSalleCollides(salle) && (salle.getX() < 0 || salle.getY() < 0 || salle.getX() >= largeur || salle.getY() >= hauteur))
+        if (!isSalleCollides(salle) && isOutOfMap(salle.getX(), salle.getY()))
             return false;
         
         super.add(salle);
@@ -119,6 +137,19 @@ public final class Etage extends ArrayList<ISalle> implements IEtage {
         }
         
         return null;
+    }
+    
+    @Override
+    public boolean isWallAt(int x, int y) {
+        if (isOutOfMap(x, y))
+            return false;
+        
+        return m_walls[y][x];
+    }
+    
+    public boolean isOutOfMap(int x, int y)
+    {
+        return x < 0 || y < 0 || x >= largeur || y >= hauteur;
     }
     
     /**

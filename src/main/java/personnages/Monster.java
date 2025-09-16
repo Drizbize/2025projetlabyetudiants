@@ -26,12 +26,7 @@ public class Monster extends APersonnage {
         if (sallesAccessibles == null || (sallesAccessibles != null && sallesAccessibles.isEmpty()))
             return getPosition();
         
-        ArrayList<ISalle> salles = new ArrayList<>();
-        for (ISalle s : sallesAccessibles)
-        {
-            salles.add(s);
-        }
-        
+        ArrayList<ISalle> salles = new ArrayList<>(sallesAccessibles);
         return salles.get(_rnd.nextInt(sallesAccessibles.size()));
     }
 }

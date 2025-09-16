@@ -42,3 +42,5 @@
 ## 15/09/2025
 - Diagram of "personnages" package
 - Finishing the project
+## 16/09/2025
+- Drawing walls

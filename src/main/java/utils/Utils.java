@@ -10,6 +10,15 @@ package utils;
  */
 public class Utils {
     /**
+     * Direction positions offsets
+     */
+    public static Vector2[] DIRECTION_POSITIONS = {
+        new Vector2(-1, 0),
+        new Vector2(1, 0),
+        new Vector2(0, -1),
+        new Vector2(0, 1)
+    };
+    /**
      * Simple lerp function.
      * Returns a position between 2 position from coeficient
      * @param a position1
