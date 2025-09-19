@@ -231,10 +231,6 @@ public class Dessin extends Canvas {
         }
     }
     
-    public void drawWalls()
-    {
-    }
-    
     public void drawGameOver()
     {
         tampon.fillText("Game Over", 20 * unite, 20 * unite);
