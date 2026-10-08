@@ -1,3 +1,11 @@
+> **University project** — BUT Informatique (Computer Science), IUT de Bordeaux · September 2025 · individual project
+>
+> Labyrinth game in Java: a hero explores a multi-floor labyrinth and fights dragons.
+>
+> **Technologies:** Java, JavaFX, Maven
+
+---
+
 **Richard Danilchenko S3B**
 
 ## About the project
